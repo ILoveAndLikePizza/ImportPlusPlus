@@ -97,7 +97,7 @@ namespace ImportPlusPlus
             else if (MessageBox.Show(found + " of the " + toImportFiles.Length + " queried files have been found.\nDo you want to continue?", "Please confirm:", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) return;
             SetBusy(true);
             // start with importing
-            decimal progressBarIncrement = Math.Floor((decimal)(100 / toImportFiles.Length));
+            decimal progressBarIncrement = Math.Floor((decimal)(100 / found));
             foreach (string path in presentFiles)
             {
                 string[] directories = path.Split('\\');
@@ -106,7 +106,13 @@ namespace ImportPlusPlus
                 string extension = dotFragments[dotFragments.Length - 1];
                 if (toImportFiles.Contains(file))
                 {
-                    File.Copy(path, toDirectory + "\\" + newName + " " + newFormat.Replace("<number>", renamingIndex.ToString() + "." + extension), DoOverwrite.Checked);
+                    try
+                    {
+                        File.Copy(path, toDirectory + "\\" + newName + " " + newFormat.Replace("<number>", renamingIndex.ToString() + "." + extension), DoOverwrite.Checked);
+                    } catch
+                    {
+                        MessageBox.Show("Something went wrong with importing a file.\nAre you sure that it still exists?", "Cannot import file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                     ProgressLabel.Text = "Copying " + file + "...";
                     ProgressBar.Value += (int)progressBarIncrement;
                     renamingIndex++;

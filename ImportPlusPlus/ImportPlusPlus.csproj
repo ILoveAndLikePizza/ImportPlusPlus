@@ -11,6 +11,7 @@
     <Product>Import++</Product>
     <Authors>Import++</Authors>
     <AssemblyName>Import++</AssemblyName>
+    <Description>Import and automatically rename files!</Description>
   </PropertyGroup>
 
   <ItemGroup>
