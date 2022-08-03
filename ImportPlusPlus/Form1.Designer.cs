@@ -54,8 +54,8 @@
             this.RenameFormat = new System.Windows.Forms.ComboBox();
             this.DoOverwrite = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.ProgressLabel = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.MoveNotCopy = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.FromNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ToNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.StartRenameAt)).BeginInit();
@@ -138,6 +138,7 @@
             this.FromNumber.Name = "FromNumber";
             this.FromNumber.Size = new System.Drawing.Size(123, 27);
             this.FromNumber.TabIndex = 4;
+            this.FromNumber.BorderStyle = BorderStyle.FixedSingle;
             this.FromNumber.Value = new decimal(new int[] {
             1,
             0,
@@ -159,6 +160,7 @@
             0,
             0});
             this.ToNumber.Name = "ToNumber";
+            this.ToNumber.BorderStyle = BorderStyle.FixedSingle;
             this.ToNumber.Size = new System.Drawing.Size(123, 27);
             this.ToNumber.TabIndex = 5;
             this.ToNumber.Value = new decimal(new int[] {
@@ -199,6 +201,7 @@
             0,
             0,
             0});
+            this.StartRenameAt.BorderStyle = BorderStyle.FixedSingle;
             this.StartRenameAt.Name = "StartRenameAt";
             this.StartRenameAt.Size = new System.Drawing.Size(123, 27);
             this.StartRenameAt.TabIndex = 7;
@@ -328,21 +331,11 @@
             this.DoOverwrite.CheckState = System.Windows.Forms.CheckState.Checked;
             this.DoOverwrite.Location = new System.Drawing.Point(17, 375);
             this.DoOverwrite.Name = "DoOverwrite";
+            this.DoOverwrite.FlatStyle = FlatStyle.System;
             this.DoOverwrite.Size = new System.Drawing.Size(302, 24);
             this.DoOverwrite.TabIndex = 10;
             this.DoOverwrite.Text = "Overwrite files if they are already present";
             this.DoOverwrite.UseVisualStyleBackColor = true;
-            // 
-            // ProgressLabel
-            // 
-            this.ProgressLabel.AutoSize = true;
-            this.ProgressLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.ProgressLabel.Location = new System.Drawing.Point(354, 376);
-            this.ProgressLabel.Name = "ProgressLabel";
-            this.ProgressLabel.Size = new System.Drawing.Size(94, 20);
-            this.ProgressLabel.TabIndex = 28;
-            this.ProgressLabel.Text = "Initializing...";
-            this.ProgressLabel.Visible = false;
             // 
             // pictureBox1
             // 
@@ -354,13 +347,24 @@
             this.pictureBox1.TabIndex = 29;
             this.pictureBox1.TabStop = false;
             // 
+            // MoveNotCopy
+            // 
+            this.MoveNotCopy.AutoSize = true;
+            this.MoveNotCopy.Location = new System.Drawing.Point(374, 375);
+            this.MoveNotCopy.Name = "MoveNotCopy";
+            this.MoveNotCopy.Size = new System.Drawing.Size(289, 24);
+            this.MoveNotCopy.TabIndex = 11;
+            this.MoveNotCopy.FlatStyle = FlatStyle.System;
+            this.MoveNotCopy.Text = "Move the files instead of copying them";
+            this.MoveNotCopy.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(715, 481);
+            this.Controls.Add(this.MoveNotCopy);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.ProgressLabel);
             this.Controls.Add(this.DoOverwrite);
             this.Controls.Add(this.RenameFormat);
             this.Controls.Add(this.TheAboutButton);
@@ -425,7 +429,7 @@
         private ComboBox RenameFormat;
         private CheckBox DoOverwrite;
         private ToolTip toolTip1;
-        private Label ProgressLabel;
         private PictureBox pictureBox1;
+        private CheckBox MoveNotCopy;
     }
 }
