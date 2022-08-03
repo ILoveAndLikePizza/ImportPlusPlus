@@ -1,5 +1,3 @@
-using System.IO;
-
 namespace ImportPlusPlus
 {
     public partial class Form1 : Form
@@ -15,7 +13,7 @@ namespace ImportPlusPlus
                 FromDirectoryInput.Text.Length > 0 && ToDirectoryInput.Text.Length > 0 &&
                 FileNameFormat.Text.Length > 0 && FileNameFormat.Text.Contains('*') &&
                 RenameTo.Text.Length > 0 && FromNumber.Value > 0 &&
-                FromNumber.Value < ToNumber.Value && StartRenameAt.Value > 0
+                FromNumber.Value <= ToNumber.Value && StartRenameAt.Value > 0
             );
         }
 
@@ -25,7 +23,6 @@ namespace ImportPlusPlus
                 NumberFormat.Enabled = FromDirectoryLabel.Enabled = ToDirectoryLabel.Enabled = FileNameFormat.Enabled = DoOverwrite.Enabled =
                 FromNumber.Enabled = ToNumber.Enabled = StartRenameLabel.Enabled = FromDirectoryButton.Enabled = StartButton.Enabled =
                 ToDirectoryButton.Enabled = RenameTo.Enabled = StartRenameAt.Enabled = RenameFormat.Enabled = !to;
-            ProgressLabel.Visible = to;
             if (!to) ProgressBar.Value = 0;
         }
 
@@ -76,6 +73,13 @@ namespace ImportPlusPlus
                     searchTarget += "*";
                 }
             }
+            long alreadyImported = 0;
+            for (long i=0; i<=(to - from); i++)
+            {
+                string[] dotFragments = oldFormat.Split('.');
+                string extension = dotFragments[dotFragments.Length - 1];
+                if (File.Exists(toDirectory + "\\" + newName + " " + newFormat.Replace("<number>", (renamingIndex + i).ToString()) + "." + extension)) alreadyImported++;
+            }
             for (long i=from; i<=to; i++)
             {
                 string totalNumber = leadingZeros + i.ToString();
@@ -91,10 +95,12 @@ namespace ImportPlusPlus
             }
             if (found == 0)
             {
-                MessageBox.Show("None of the " + toImportFiles.Length + " queried files have been found.", "Cannot import", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(((toImportFiles.Length == 1) ? "No queried file has":"None of the " + toImportFiles.Length + " queried files have") + " been found.", "Cannot import", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            else if (MessageBox.Show(found + " of the " + toImportFiles.Length + " queried files have been found.\nDo you want to continue?", "Please confirm:", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) return;
+            else if (MessageBox.Show(((found == 1) ? "The queried file has" : found + " of the " + toImportFiles.Length + " queried files have") + " been found.\nDo you want to continue?", "Please confirm:", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) return;
+            if (alreadyImported > 0 && DoOverwrite.Checked && MessageBox.Show(((alreadyImported == 1) ? "The queried file is" : alreadyImported + " of the " + toImportFiles.Length + " queried files are") + " about to be overwritten.\nDo you want to continue?", "Please confirm:", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;
+
             SetBusy(true);
             // start with importing
             decimal progressBarIncrement = Math.Floor((decimal)(100 / found));
@@ -108,17 +114,20 @@ namespace ImportPlusPlus
                 {
                     try
                     {
-                        File.Copy(path, toDirectory + "\\" + newName + " " + newFormat.Replace("<number>", renamingIndex.ToString() + "." + extension), DoOverwrite.Checked);
-                    } catch
-                    {
-                        MessageBox.Show("Something went wrong with importing a file.\nAre you sure that it still exists?", "Cannot import file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        if (MoveNotCopy.Checked) File.Move(path, toDirectory + "\\" + newName + " " + newFormat.Replace("<number>", renamingIndex.ToString() + "." + extension), DoOverwrite.Checked);
+                        else File.Copy(path, toDirectory + "\\" + newName + " " + newFormat.Replace("<number>", renamingIndex.ToString() + "." + extension), DoOverwrite.Checked);
                     }
-                    ProgressLabel.Text = "Copying " + file + "...";
+                    catch (IOException) { } // when overwriting is prohibited by user, do nothing
+                    catch {
+                        MessageBox.Show("Something went wrong with importing a file.\nAre you sure that it still exists?", "Cannot import file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        SetBusy(false);
+                        return;
+                    }
                     ProgressBar.Value += (int)progressBarIncrement;
                     renamingIndex++;
                 }
             }
-            MessageBox.Show(found + " files have been imported and renamed.", "Finished", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("The queried " + ((toImportFiles.Length == 1) ? "file has":"files have") + " been imported and renamed.", "Finished", MessageBoxButtons.OK, MessageBoxIcon.Information);
             SetBusy(false);
         }
 
