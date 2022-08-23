@@ -65,7 +65,7 @@
             // FromDirectoryInput
             // 
             this.FromDirectoryInput.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.FromDirectoryInput.Enabled = false;
+            this.FromDirectoryInput.ReadOnly = true;
             this.FromDirectoryInput.Location = new System.Drawing.Point(17, 108);
             this.FromDirectoryInput.Name = "FromDirectoryInput";
             this.FromDirectoryInput.Size = new System.Drawing.Size(564, 27);
@@ -275,7 +275,7 @@
             // ToDirectoryInput
             // 
             this.ToDirectoryInput.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.ToDirectoryInput.Enabled = false;
+            this.ToDirectoryInput.ReadOnly = true;
             this.ToDirectoryInput.Location = new System.Drawing.Point(16, 327);
             this.ToDirectoryInput.Name = "ToDirectoryInput";
             this.ToDirectoryInput.Size = new System.Drawing.Size(564, 27);
