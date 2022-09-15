@@ -53,7 +53,7 @@
             this.TheAboutButton = new System.Windows.Forms.Button();
             this.RenameFormat = new System.Windows.Forms.ComboBox();
             this.DoOverwrite = new System.Windows.Forms.CheckBox();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.FilenameformatTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.MoveNotCopy = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.FromNumber)).BeginInit();
@@ -65,9 +65,9 @@
             // FromDirectoryInput
             // 
             this.FromDirectoryInput.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.FromDirectoryInput.ReadOnly = true;
             this.FromDirectoryInput.Location = new System.Drawing.Point(17, 108);
             this.FromDirectoryInput.Name = "FromDirectoryInput";
+            this.FromDirectoryInput.ReadOnly = true;
             this.FromDirectoryInput.Size = new System.Drawing.Size(564, 27);
             this.FromDirectoryInput.TabIndex = 0;
             // 
@@ -101,7 +101,7 @@
             this.FormatLabel.Size = new System.Drawing.Size(125, 20);
             this.FormatLabel.TabIndex = 3;
             this.FormatLabel.Text = "File name format:";
-            this.toolTip1.SetToolTip(this.FormatLabel, "Define the file name format, including extension.\nUse * to indicate all numbers, " +
+            this.FilenameformatTooltip.SetToolTip(this.FormatLabel, "Define the file name format, including extension.\nUse * to indicate all numbers, " +
         "including leading zeros.\nNote that this is case sensitive!\nExample: IMG_****.JPG" +
         "");
             // 
@@ -124,6 +124,7 @@
             // 
             // FromNumber
             // 
+            this.FromNumber.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.FromNumber.Location = new System.Drawing.Point(418, 184);
             this.FromNumber.Maximum = new decimal(new int[] {
             999999,
@@ -138,7 +139,6 @@
             this.FromNumber.Name = "FromNumber";
             this.FromNumber.Size = new System.Drawing.Size(123, 27);
             this.FromNumber.TabIndex = 4;
-            this.FromNumber.BorderStyle = BorderStyle.FixedSingle;
             this.FromNumber.Value = new decimal(new int[] {
             1,
             0,
@@ -148,6 +148,7 @@
             // 
             // ToNumber
             // 
+            this.ToNumber.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ToNumber.Location = new System.Drawing.Point(565, 184);
             this.ToNumber.Maximum = new decimal(new int[] {
             999999,
@@ -160,7 +161,6 @@
             0,
             0});
             this.ToNumber.Name = "ToNumber";
-            this.ToNumber.BorderStyle = BorderStyle.FixedSingle;
             this.ToNumber.Size = new System.Drawing.Size(123, 27);
             this.ToNumber.TabIndex = 5;
             this.ToNumber.Value = new decimal(new int[] {
@@ -190,6 +190,7 @@
             // 
             // StartRenameAt
             // 
+            this.StartRenameAt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.StartRenameAt.Location = new System.Drawing.Point(418, 255);
             this.StartRenameAt.Maximum = new decimal(new int[] {
             999999,
@@ -201,7 +202,6 @@
             0,
             0,
             0});
-            this.StartRenameAt.BorderStyle = BorderStyle.FixedSingle;
             this.StartRenameAt.Name = "StartRenameAt";
             this.StartRenameAt.Size = new System.Drawing.Size(123, 27);
             this.StartRenameAt.TabIndex = 7;
@@ -275,9 +275,9 @@
             // ToDirectoryInput
             // 
             this.ToDirectoryInput.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.ToDirectoryInput.ReadOnly = true;
             this.ToDirectoryInput.Location = new System.Drawing.Point(16, 327);
             this.ToDirectoryInput.Name = "ToDirectoryInput";
+            this.ToDirectoryInput.ReadOnly = true;
             this.ToDirectoryInput.Size = new System.Drawing.Size(564, 27);
             this.ToDirectoryInput.TabIndex = 17;
             // 
@@ -329,10 +329,10 @@
             this.DoOverwrite.AutoSize = true;
             this.DoOverwrite.Checked = true;
             this.DoOverwrite.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.DoOverwrite.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.DoOverwrite.Location = new System.Drawing.Point(17, 375);
             this.DoOverwrite.Name = "DoOverwrite";
-            this.DoOverwrite.FlatStyle = FlatStyle.System;
-            this.DoOverwrite.Size = new System.Drawing.Size(302, 24);
+            this.DoOverwrite.Size = new System.Drawing.Size(311, 25);
             this.DoOverwrite.TabIndex = 10;
             this.DoOverwrite.Text = "Overwrite files if they are already present";
             this.DoOverwrite.UseVisualStyleBackColor = true;
@@ -350,11 +350,11 @@
             // MoveNotCopy
             // 
             this.MoveNotCopy.AutoSize = true;
+            this.MoveNotCopy.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.MoveNotCopy.Location = new System.Drawing.Point(374, 375);
             this.MoveNotCopy.Name = "MoveNotCopy";
-            this.MoveNotCopy.Size = new System.Drawing.Size(289, 24);
+            this.MoveNotCopy.Size = new System.Drawing.Size(298, 25);
             this.MoveNotCopy.TabIndex = 11;
-            this.MoveNotCopy.FlatStyle = FlatStyle.System;
             this.MoveNotCopy.Text = "Move the files instead of copying them";
             this.MoveNotCopy.UseVisualStyleBackColor = true;
             // 
@@ -428,7 +428,7 @@
         private Button TheAboutButton;
         private ComboBox RenameFormat;
         private CheckBox DoOverwrite;
-        private ToolTip toolTip1;
+        private ToolTip FilenameformatTooltip;
         private PictureBox pictureBox1;
         private CheckBox MoveNotCopy;
     }

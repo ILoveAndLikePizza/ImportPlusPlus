@@ -1,3 +1,5 @@
+using System.Net.Http;
+
 namespace ImportPlusPlus
 {
     public partial class Form1 : Form
@@ -137,9 +139,24 @@ namespace ImportPlusPlus
             about.ShowDialog();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private async void Form1_Load(object sender, EventArgs e)
         {
             RenameFormat.SelectedIndex = 0;
+            try
+            {
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Add("User-Agent", "The Import++ Application");
+                HttpResponseMessage response = client.GetAsync("https://api.github.com/repos/ILoveAndLikePizza/ImportPlusPlus/releases/latest").Result;
+                response.EnsureSuccessStatusCode();
+                string responseText = await response.Content.ReadAsStringAsync();
+                if (!responseText.Contains("\"name\":\"Import++ v" + ProductVersion + "\""))
+                {
+                    if (MessageBox.Show("There is a new update available for Import++.\nWould you like to visit the download page?", "Update available", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) System.Diagnostics.Process.Start("cmd.exe", "/c start https://github.com/ILoveAndLikePizza/ImportPlusPlus/releases");
+                }
+            } catch (Exception)
+            {
+                MessageBox.Show("Failed to check for updates.\nDon't worry, you can still use Import++.", "Failed to check updates", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }   
         }
     }
 }
